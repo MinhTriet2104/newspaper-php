@@ -255,6 +255,7 @@ function createUrl($str, $id) {
 					</li>
 					<li><a href="about.html">About Us</a></li>
 					<li><a href="contact.html">Contacts</a></li>
+					<li><a href="#">Advertise</a></li>
 				</ul>
 				<button class="nav-close nav-aside-close"><span></span></button>
 			</div>
