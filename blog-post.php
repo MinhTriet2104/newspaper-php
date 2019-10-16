@@ -15,6 +15,30 @@ $newspaperModels=new Newspapers();
 $newspaper= $newspaperModels->getNewsById($id);
 
 $author=  $newspaperModels->getAuthorById($newspaper['newspaper_author_id'])['author_name'];
+
+$newspaperList= $newspaperModels->getNewspapersList();
+
+// Tao url
+function createUrl($str, $id) {
+  $str = strip_tags($str);
+  $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
+  $str = preg_replace("/(è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ)/", 'e', $str);
+  $str = preg_replace("/(ì|í|ị|ỉ|ĩ)/", 'i', $str);
+  $str = preg_replace("/(ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ)/", 'o', $str);
+  $str = preg_replace("/(ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ)/", 'u', $str);
+  $str = preg_replace("/(ỳ|ý|ỵ|ỷ|ỹ)/", 'y', $str);
+  $str = preg_replace("/(đ)/", 'd', $str);
+  $str = preg_replace("/(À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ)/", 'A', $str);
+  $str = preg_replace("/(È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ)/", 'E', $str);
+  $str = preg_replace("/(Ì|Í|Ị|Ỉ|Ĩ)/", 'I', $str);
+  $str = preg_replace("/(Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ)/", 'O', $str);
+  $str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", 'U', $str);
+  $str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
+  $str = preg_replace("/(Đ)/", 'D', $str);
+  $str = preg_replace("/(\“|\”|\‘|\’|\,|\!|\&|\;|\@|\#|\%|\~|\`|\=|\_|\'|\]|\[|\}|\{|\)|\(|\+|\-|\^|\;|\:)/", '', $str);
+  $str = trim(preg_replace("/\s+/", ' ', $str));
+  return strtolower(str_replace(' ', '-', $str) . '-' . $id);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -115,10 +139,12 @@ $author=  $newspaperModels->getAuthorById($newspaper['newspaper_author_id'])['au
 								<div class="row">
 									<div class="col-md-2">
 										<ul class="tab-nav">
-											<li class="active"><a data-toggle="tab" href="#tab1">Lifestyle</a></li>
-											<li><a data-toggle="tab" href="#tab2">Fashion</a></li>
-											<li><a data-toggle="tab" href="#tab1">Health</a></li>
-											<li><a data-toggle="tab" href="#tab2">Travel</a></li>
+										<?php
+											echo' <li class="active"><a data-toggle="tab" href="#tab1">'.$categoryList[0]['category_name'].'</a></li>';
+											for ($i=1; $i<count($categoryList); $i++) {
+												echo '<li><a data-toggle="tab" href="#tab'.($i + 1).'">'.$categoryList[$i]['category_name'].'</a></li>';
+											}
+											?>
 										</ul>
 									</div>
 									<div class="col-md-10">
@@ -626,56 +652,25 @@ $author=  $newspaperModels->getAuthorById($newspaper['newspaper_author_id'])['au
 					<!-- post widget -->
 					<div class="aside-widget">
 						<div class="section-title">
-							<h2 class="title">Popular Posts</h2>
+							<h2 class="title">Các bài đang nổi</h2>
 						</div>
 						<!-- post -->
+						<?php 
+						 $hotNews = $newspaperModels->getHotNews(4);
+						 foreach ($hotNews as $news) {
+						 ?>
 						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="./img/widget-3.jpg" alt=""></a>
-							<div class="post-body">
+						<a class="post-img" href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
+						<div class="post-body">
 								<div class="post-category">
-									<a href="category.html">Lifestyle</a>
+									<a href="category.php?id=<?php echo $news['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></a>
 								</div>
-								<h3 class="post-title"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
+								<h3 class="post-title"><a href="blog-post.php/<?php createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
 							</div>
 						</div>
-						<!-- /post -->
-
-						<!-- post -->
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="./img/widget-2.jpg" alt=""></a>
-							<div class="post-body">
-								<div class="post-category">
-									<a href="category.html">Technology</a>
-									<a href="category.html">Lifestyle</a>
-								</div>
-								<h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-							</div>
-						</div>
-						<!-- /post -->
-
-						<!-- post -->
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="./img/widget-4.jpg" alt=""></a>
-							<div class="post-body">
-								<div class="post-category">
-									<a href="category.html">Health</a>
-								</div>
-								<h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-							</div>
-						</div>
-						<!-- /post -->
-
-						<!-- post -->
-						<div class="post post-widget">
-							<a class="post-img" href="blog-post.html"><img src="./img/widget-5.jpg" alt=""></a>
-							<div class="post-body">
-								<div class="post-category">
-									<a href="category.html">Health</a>
-									<a href="category.html">Lifestyle</a>
-								</div>
-								<h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-							</div>
-						</div>
+						<?php 
+						 }
+						 ?>
 						<!-- /post -->
 					</div>
 					<!-- /post widget -->
@@ -687,12 +682,13 @@ $author=  $newspaperModels->getAuthorById($newspaper['newspaper_author_id'])['au
 						</div>
 						<div class="galery-widget">
 							<ul>
-								<li><a href="#"><img src="<?php echo BASE_URL; ?>/img/galery-1.jpg" alt=""></a></li>
-								<li><a href="#"><img src="<?php echo BASE_URL; ?>/img/galery-2.jpg" alt=""></a></li>
-								<li><a href="#"><img src="<?php echo BASE_URL; ?>/img/galery-3.jpg" alt=""></a></li>
-								<li><a href="#"><img src="<?php echo BASE_URL; ?>/img/galery-4.jpg" alt=""></a></li>
-								<li><a href="#"><img src="<?php echo BASE_URL; ?>/img/galery-5.jpg" alt=""></a></li>
-								<li><a href="#"><img src="<?php echo BASE_URL; ?>/img/galery-6.jpg" alt=""></a></li>
+							<?php 
+							$newsRecent = $newspaperModels->getLimitRecent(6);
+							foreach ($newsRecent as $newsRecent) {?>
+								<li><a href="#"><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt=""></a></li>		
+								<?php
+							}						
+								?>
 							</ul>
 						</div>
 					</div>
@@ -738,11 +734,13 @@ $author=  $newspaperModels->getAuthorById($newspaper['newspaper_author_id'])['au
 						<h3 class="footer-title">Categories</h3>
 						<div class="category-widget">
 							<ul>
-								<li><a href="#">Lifestyle <span>451</span></a></li>
-								<li><a href="#">Fashion <span>230</span></a></li>
-								<li><a href="#">Technology <span>40</span></a></li>
-								<li><a href="#">Travel <span>38</span></a></li>
-								<li><a href="#">Health <span>24</span></a></li>
+							<?php
+								foreach ($categoryList as $cat) {
+								?>
+									<li><a href="#"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
+								<?php
+								}
+								?>
 							</ul>
 						</div>
 					</div>
@@ -752,17 +750,14 @@ $author=  $newspaperModels->getAuthorById($newspaper['newspaper_author_id'])['au
 						<h3 class="footer-title">Tags</h3>
 						<div class="tags-widget">
 							<ul>
-								<li><a href="#">Social</a></li>
-								<li><a href="#">Lifestyle</a></li>
-								<li><a href="#">Blog</a></li>
-								<li><a href="#">Travel</a></li>
-								<li><a href="#">Technology</a></li>
-								<li><a href="#">Fashion</a></li>
-								<li><a href="#">Life</a></li>
-								<li><a href="#">News</a></li>
-								<li><a href="#">Magazine</a></li>
-								<li><a href="#">Food</a></li>
-								<li><a href="#">Health</a></li>
+							<?php
+								foreach ($categoryList as $cat) {
+								?>
+									<li><a href="#"><?php echo $cat['category_name']; ?> </a></li>
+								<?php
+								}
+								?>
+								
 							</ul>
 						</div>
 					</div>
