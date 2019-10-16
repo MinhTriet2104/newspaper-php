@@ -26,7 +26,7 @@ function createUrl($str, $id) {
   $str = preg_replace("/(Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ)/", 'U', $str);
   $str = preg_replace("/(Ỳ|Ý|Ỵ|Ỷ|Ỹ)/", 'Y', $str);
   $str = preg_replace("/(Đ)/", 'D', $str);
-  $str = preg_replace("/(\“|\”|\‘|\’|\,|\!|\&|\;|\@|\#|\%|\~|\`|\=|\_|\'|\]|\[|\}|\{|\)|\(|\+|\-|\^)/", '', $str);
+  $str = preg_replace("/(\“|\”|\‘|\’|\,|\!|\&|\;|\@|\#|\%|\~|\`|\=|\_|\'|\]|\[|\}|\{|\)|\(|\+|\-|\^|\;|\:)/", '', $str);
   $str = trim(preg_replace("/\s+/", ' ', $str));
   return strtolower(str_replace(' ', '-', $str) . '-' . $id);
 }
@@ -506,12 +506,12 @@ function createUrl($str, $id) {
             foreach ($hotNews as $news) {
             ?>
             <div class="post post-widget">
-							<a class="post-img" href="blog-post.php/<?php createUrl($news['newspaper_name'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
+							<a class="post-img" href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
 							<div class="post-body">
 								<div class="post-category">
 									<a href="category.php?id=<?php echo $news['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></a>
 								</div>
-								<h3 class="post-title"><a href="blog-post.php/<?php createUrl($news['newspaper_name'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
+								<h3 class="post-title"><a href="blog-post.php/<?php createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
 							</div>
 						</div>
             <?php
@@ -553,193 +553,77 @@ function createUrl($str, $id) {
 		<!-- container -->
 		<div class="container">
 			<!-- row -->
-		
-			
 			<div class="row">
+			<!-- for -->
+			<?php
+						$newsRecent = $newspaperModels->getLimitRecent(3);
+						$i = 0;
+						foreach ($newsRecent as $news) {
+						?>		
 				<div class="col-md-4">
 					<div class="section-title">
-						<h2 class="title">Lifestyle</h2>
+						<h2  class="title"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></h2>
 					</div>
 					<!-- post -->
 					<div class="post">
-						<a class="post-img" href="blog-post.html"><img src="./img/post-6.jpg" alt=""></a>
+						<a class="post-img" href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
 						<div class="post-body">
 							<div class="post-category">
-								<a href="category.html">Fashion</a>
-								<a href="category.html">Lifestyle</a>
+								<a href="category.php?id=<?php echo $news['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name'];?></a>								
 							</div>
-							<h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
+							<h3 class="post-title"><a href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo $news['newspaper_title']; ?></a></h3>
 							<ul class="post-meta">
-								<li><a href="author.html">John Doe</a></li>
-								<li>20 April 2018</li>
+								<li><a href="author.html"><?php echo $newspaperModels->getAuthorById($news['newspaper_author_id'])['author_name']; ?></a></li>
+								<?php
+								$date = new DateTime($news['newspaper_date']);
+								$date = $date->format('d M Y, H:i');
+								?>
+								<li><?php echo $date; ?></li>								
 							</ul>
 						</div>
 					</div>
+					
 					<!-- /post -->
 				</div>
-				<div class="col-md-4">
-					<div class="section-title">
-						<h2 class="title">Fashion</h2>
-					</div>
-					<!-- post -->
-					<div class="post">
-						<a class="post-img" href="blog-post.html"><img src="./img/post-5.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-							<ul class="post-meta">
-								<li><a href="author.html">John Doe</a></li>
-								<li>20 April 2018</li>
-							</ul>
-						</div>
-					</div>
-					<!-- /post -->
-				</div>
-				<div class="col-md-4">
-					<div class="section-title">
-						<h2 class="title">Health</h2>
-					</div>
-					<!-- post -->
-					<div class="post">
-						<a class="post-img" href="blog-post.html"><img src="./img/post-9.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-							<ul class="post-meta">
-								<li><a href="author.html">John Doe</a></li>
-								<li>20 April 2018</li>
-							</ul>
-						</div>
-					</div>
-					<!-- /post -->
-				</div>
+				<?php
+					}
+					?>
+					<!-- /for -->			
 			</div>
 			<!-- /row -->
-
+			
 			<!-- row -->
 			<div class="row">
 				<!-- for1 -->
 				<?php
-
+				$k=0;
+					for($i=0;$i<3;$i++)
+					{
+						$newsRecent = $newspaperModels->getHotNews(9);	
 				?>
-				<div class="col-md-4">
-					<!-- post -->
+				<div class="col-md-4">				
+				<?php					
+					for($j=1;$j<=3;$j++, $k++)
+					{												
+				?>
 					<div class="post post-widget">
-						<a class="post-img" href="blog-post.html"><img src="./img/widget-1.jpg" alt=""></a>
+						<a class="post-img" href="blog-post.php/<?php echo createUrl($newsRecent[$k]['newspaper_title'], $newsRecent[$k]['newspaper_id']); ?>"><img src="<?php echo $newsRecent[$k]['newspaper_imgae'] ;?>" alt="news-img"></a>
 						<div class="post-body">
 							<div class="post-category">
 								<a href="category.html"></a>
 							</div>
-							<h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
+							<h3 class="post-title"><a href="blog-post.php/<?php echo createUrl($newsRecent[$k]['newspaper_title'], $newsRecent[$k]['newspaper_id']); ?>"><?php echo strip_tags( $newsRecent[$k]['newspaper_title']) ;?></a></h3>
 						</div>
 					</div>
-					<!-- /post -->
-				<!-- /for1 -->
-					<!-- post -->
-					<div class="post post-widget">
-						<a class="post-img" href="blog-post.html"><img src="./img/widget-2.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Technology</a>
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-						</div>
+				<?php 				
+				}
+				?>
 					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="post post-widget">
-						<a class="post-img" href="blog-post.html"><img src="./img/widget-3.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-						</div>
-					</div>
-					<!-- /post -->
-				</div>
-				<div class="col-md-4">
-					<!-- post -->
-					<div class="post post-widget">
-						<a class="post-img" href="blog-post.html"><img src="./img/widget-4.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Health</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- /post -->
-					<div class="post post-widget">
-						<a class="post-img" href="blog-post.html"><img src="./img/widget-5.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Health</a>
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="post post-widget">
-						<a class="post-img" href="blog-post.html"><img src="./img/widget-6.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Fashion</a>
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-						</div>
-					</div>
-					<!-- /post -->
-				</div>
-				<div class="col-md-4">
-					<!-- post -->
-					<div class="post post-widget">
-						<a class="post-img" href="blog-post.html"><img src="./img/widget-8.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Travel</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="post post-widget">
-						<a class="post-img" href="blog-post.html"><img src="./img/widget-9.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Technology</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="post post-widget">
-						<a class="post-img" href="blog-post.html"><img src="./img/widget-10.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-						</div>
-					</div>
-					<!-- /post -->
-				</div>
+				<?php 			
+					}
+					?>
+			<!-- /for1 -->
+			
 			</div>
 			<!-- /row -->
 		</div>
@@ -753,93 +637,37 @@ function createUrl($str, $id) {
 		<div class="container">
 			<!-- row -->
 			<div class="row">
+			
 				<div class="col-md-8">
+				<?php 
+			$newsRecent = $newspaperModels->getHotNews(5);
+			foreach ($newsRecent as $newsRecent) {
+			?>	
 					<!-- post -->
 					<div class="post post-row">
-						<a class="post-img" href="blog-post.html"><img src="./img/post-13.jpg" alt=""></a>
+						<a class="post-img" href="blog-post.html"><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt=""></a>
 						<div class="post-body">
 							<div class="post-category">
-								<a href="category.html">Travel</a>
-								<a href="category.html">Lifestyle</a>
+								<a href="category.html"><?php  echo $categoryModels->getNameById($newsRecent['newspaper_category_id'])['category_name']; ?></a>							
 							</div>
-							<h3 class="post-title"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
+							<h3 class="post-title"><a href="category.php?id="<?php echo $news['newspaper_category_id'];?>><?php echo strip_tags( $newsRecent['newspaper_title']); ?></a></h3>
 							<ul class="post-meta">
-								<li><a href="author.html">John Doe</a></li>
-								<li>20 April 2018</li>
+								<li><a href="author.html"><?php echo $newspaperModels->getAuthorById($news['newspaper_author_id'])['author_name']; ?></a></li>
+								<?php
+								$date = new DateTime($newsRecent['newspaper_date']);
+								$date = $date->format('d M Y, H:i');
+								?>
+								<li><?php echo $date; ?></li>
 							</ul>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
+							<p><?php echo strip_tags( substr( $newsRecent['newspaper_content'],0, 150)).'...'; ?></p>
 						</div>
 					</div>
 					<!-- /post -->
 
 					<!-- post -->
-					<div class="post post-row">
-						<a class="post-img" href="blog-post.html"><img src="./img/post-1.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Travel</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-							<ul class="post-meta">
-								<li><a href="author.html">John Doe</a></li>
-								<li>20 April 2018</li>
-							</ul>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="post post-row">
-						<a class="post-img" href="blog-post.html"><img src="./img/post-5.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-							<ul class="post-meta">
-								<li><a href="author.html">John Doe</a></li>
-								<li>20 April 2018</li>
-							</ul>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="post post-row">
-						<a class="post-img" href="blog-post.html"><img src="./img/post-6.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Fashion</a>
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-							<ul class="post-meta">
-								<li><a href="author.html">John Doe</a></li>
-								<li>20 April 2018</li>
-							</ul>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-					<div class="post post-row">
-						<a class="post-img" href="blog-post.html"><img src="./img/post-7.jpg" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html">Health</a>
-								<a href="category.html">Lifestyle</a>
-							</div>
-							<h3 class="post-title"><a href="blog-post.html">Ne bonorum praesent cum, labitur persequeris definitionem quo cu?</a></h3>
-							<ul class="post-meta">
-								<li><a href="author.html">John Doe</a></li>
-								<li>20 April 2018</li>
-							</ul>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam...</p>
-						</div>
-					</div>
+				<?php 
+			}
+			?>
 					<!-- /post -->
 
 					<div class="section-row loadmore text-center">
@@ -854,12 +682,13 @@ function createUrl($str, $id) {
 						</div>
 						<div class="galery-widget">
 							<ul>
-								<li><a href="#"><img src="./img/galery-1.jpg" alt=""></a></li>
-								<li><a href="#"><img src="./img/galery-2.jpg" alt=""></a></li>
-								<li><a href="#"><img src="./img/galery-3.jpg" alt=""></a></li>
-								<li><a href="#"><img src="./img/galery-4.jpg" alt=""></a></li>
-								<li><a href="#"><img src="./img/galery-5.jpg" alt=""></a></li>
-								<li><a href="#"><img src="./img/galery-6.jpg" alt=""></a></li>
+							<?php 
+							$newsRecent = $newspaperModels->getLimitRecent(6);
+							foreach ($newsRecent as $newsRecent) {?>
+								<li><a href="#"><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt=""></a></li>		
+								<?php
+							}						
+								?>
 							</ul>
 						</div>
 					</div>
@@ -905,11 +734,14 @@ function createUrl($str, $id) {
 						<h3 class="footer-title">Categories</h3>
 						<div class="category-widget">
 							<ul>
-								<li><a href="#">Lifestyle <span>451</span></a></li>
-								<li><a href="#">Fashion <span>230</span></a></li>
-								<li><a href="#">Technology <span>40</span></a></li>
-								<li><a href="#">Travel <span>38</span></a></li>
-								<li><a href="#">Health <span>24</span></a></li>
+							<?php
+								foreach ($categoryList as $cat) {
+								?>
+									<li><a href="#"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
+								<?php
+								}
+								?>
+								
 							</ul>
 						</div>
 					</div>
@@ -919,17 +751,14 @@ function createUrl($str, $id) {
 						<h3 class="footer-title">Tags</h3>
 						<div class="tags-widget">
 							<ul>
-								<li><a href="#">Social</a></li>
-								<li><a href="#">Lifestyle</a></li>
-								<li><a href="#">Blog</a></li>
-								<li><a href="#">Travel</a></li>
-								<li><a href="#">Technology</a></li>
-								<li><a href="#">Fashion</a></li>
-								<li><a href="#">Life</a></li>
-								<li><a href="#">News</a></li>
-								<li><a href="#">Magazine</a></li>
-								<li><a href="#">Food</a></li>
-								<li><a href="#">Health</a></li>
+							<?php
+								foreach ($categoryList as $cat) {
+								?>
+									<li><a href="#"><?php echo $cat['category_name']; ?> </a></li>
+								<?php
+								}
+								?>
+								
 							</ul>
 						</div>
 					</div>
@@ -953,7 +782,7 @@ function createUrl($str, $id) {
 			<div class="footer-bottom row">
 				<div class="col-md-6 col-md-push-6">
 					<ul class="footer-nav">
-						<li><a href="index.html">Home</a></li>
+						<li><a href="index.php">Home</a></li>
 						<li><a href="about.html">About Us</a></li>
 						<li><a href="contact.html">Contacts</a></li>
 						<li><a href="#">Advertise</a></li>
