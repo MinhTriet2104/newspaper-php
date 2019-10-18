@@ -45,7 +45,7 @@ echo "<div class='post-body'>";
   echo "<div class='post-category'>";
     echo "<a href='category.php" . $categoryModels->getNameById($news['newspaper_category_id'])['category_name'] . "'></a>";
     echo "</div>";
-    echo "<h3 class='post-title'><a href='category.php?id=" . $news['newspaper_category_id'] . "'>" . strip_tags( $news['newspaper_title']) . "</a></h3>";
+    echo "<h3 class='post-title'><a href='blog-post.php/$url'>" . strip_tags( $news['newspaper_title']) . "</a></h3>";
     echo "<ul class='post-meta'>";
       echo "<li><a href='author.html'>" . $newspaperModels->getAuthorById($news['newspaper_author_id'])['author_name'] . "</a></li>";
       echo "<li>$date</li>";
