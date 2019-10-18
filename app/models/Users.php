@@ -8,6 +8,13 @@ class Users extends Database
         return parent::select($sql);
     }
 
+    // check username and password
+    public function login($username, $password) {
+      $sql = parent::$connection->prepare('SELECT * FROM users WHERE user_name = ? AND user_password = ?');
+      $sql->bind_param('ss', $username, $password);
+      return parent::select($sql);
+    }
+
     // find username
     public function findUsername($username) {
       $sql = parent::$connection->prepare('SELECT * FROM users WHERE user_name = ?');

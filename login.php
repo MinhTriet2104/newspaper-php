@@ -1,13 +1,20 @@
 <?php
 session_start();
+require_once './config/Database.php';
+spl_autoload_register(function ($className) {
+    require './app/models/' . $className . '.php';
+});
+
 $notification = "";
 $_SESSION['isLogin'] = false;
 if (!empty($_POST['username']) && !empty($_POST['password'])) {
-	if ($_POST['username'] == "admin" && $_POST['password'] == "1") {
+  $userModel = new Users();
+  $user = $userModel->login($_POST['username'], $_POST['password']);
+	if ($user) {
 		$_SESSION['isLogin'] = true;
-		header("location:manage-product.php");
+		header("location:index.php");
 	} else {
-		$notification = "<div class='alert alert-danger text-center' role='alert'>Login Fail</div>";
+		$notification = "<div class='alert alert-danger text-center' role='alert'>Wrong Username or Password</div>";
 	}
 }
 ?>
