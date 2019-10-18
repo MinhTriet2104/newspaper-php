@@ -38,6 +38,16 @@ class Newspapers extends database
         return parent::select($sql);
     }
 
+    // Lay bai moi nhat tu ? den ?
+    public function loadMore($page, $limit)
+    {
+        $start = ($limit * $page) - $limit;
+        $limit = $limit + 1;
+        $sql = parent::$connection->prepare('SELECT * FROM newspapers ORDER BY newspaper_date DESC LIMIT ?, ?');
+        $sql->bind_param('ii', $start, $limit);
+        return parent::select($sql);
+    }
+
     // Lay ? bai lien quan (random)
     public function getRelative($categoryId, $newsId, $limit)
     {

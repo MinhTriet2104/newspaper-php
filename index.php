@@ -638,11 +638,10 @@ function createUrl($str, $id) {
 			<!-- row -->
 			<div class="row">
 			
-				<div class="col-md-8">
-				<?php 
-			$newsRecent = $newspaperModels->getHotNews(5);
-			foreach ($newsRecent as $newsRecent) {
-			?>	
+				<div class="col-md-8" id="content">
+        <?php 
+        foreach ($newsRecent as $newsRecent) {
+        ?>	
 					<!-- post -->
 					<div class="post post-row">
 						<a class="post-img" href="blog-post.html"><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt=""></a>
@@ -671,7 +670,7 @@ function createUrl($str, $id) {
 					<!-- /post -->
 
 					<div class="section-row loadmore text-center">
-						<a href="#" class="primary-button">Load More</a>
+						<a class="primary-button" class="load-more">Load More</a>
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -804,11 +803,15 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<!-- /FOOTER -->
 
 	<!-- jQuery Plugins -->
-	<script src="js/jquery.min.js"></script>
-	<script src="js/bootstrap.min.js"></script>
-	<script src="js/jquery.stellar.min.js"></script>
-	<script src="js/main.js"></script>
-
+	<script src="./js/jquery.min.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<script src="./js/jquery.stellar.min.js"></script>
+	<script src="./js/main.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+  <script src="./js/ajax.js"></script>
 </body>
 
 </html>

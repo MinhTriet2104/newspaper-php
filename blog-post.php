@@ -119,22 +119,20 @@ function createUrl($str, $id) {
 					<!-- nav -->
 					<ul class="nav-menu">
 						<li class="has-dropdown">
-							<a href="index.html">Home</a>
+							<a href="index.html">Trang Chủ</a>
 							<div class="dropdown">
 								<div class="dropdown-body">
 									<ul class="dropdown-list">
-										<li><a href="category.html">Category page</a></li>
-										<li><a href="blog-post.html">Post page</a></li>
-										<li><a href="author.html">Author page</a></li>
+										<li><a href="category.php">Category page</a></li>
+										<li><a href="blog-post.html">Post page</a></li>									
 										<li><a href="about.html">About Us</a></li>
 										<li><a href="contact.html">Contacts</a></li>
-										<li><a href="blank.html">Regular</a></li>
 									</ul>
 								</div>
 							</div>
 						</li>
 						<li class="has-dropdown megamenu">
-							<a href="#">Lifestyle</a>
+							<a href="#">Tin mới</a>
 							<div class="dropdown tab-dropdown">
 								<div class="row">
 									<div class="col-md-2">
@@ -152,59 +150,34 @@ function createUrl($str, $id) {
 											<!-- tab1 -->
 											<div id="tab1" class="tab-pane fade in active">
 												<div class="row">
+												<?php
+												$categoryNews = $newspaperModels->getLimitRecentByCategoryId(1, 3);
+												// echo var_dump($categoryNews);
+												foreach ($categoryNews as $news) {
+												?>
 													<!-- post -->
 													<div class="col-md-4">
-														<div class="post post-sm">
-															<a class="post-img" href="blog-post.html"><img src="./img/post-10.jpg" alt=""></a>
-															<div class="post-body">
-																<div class="post-category">
-																	<a href="category.html">Travel</a>
-																</div>
-																<h3 class="post-title title-sm"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-																<ul class="post-meta">
-																	<li><a href="author.html">John Doe</a></li>
-																	<li>20 April 2018</li>
-																</ul>
+													<div class="post post-sm">
+														<a class="post-img" href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
+														<div class="post-body">
+															<div class="post-category">
+																<a href="category.php?id=<?php echo $news['newspaper_category_id'] ?>"><?php echo $categoryList[0]['category_name']; ?></a>
 															</div>
+															<h3 class="post-title title-sm"><a href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
+															<ul class="post-meta">
+																<li><a href="author.html"><?php echo $newspaperModels->getAuthorById(1)['author_name']; ?></a></li>
+																<?php
+																$date = new DateTime($news['newspaper_date']);
+																$date = $date->format('d M Y, H:i');
+																?>
+																<li><?php echo $date; ?></li>
+															</ul>
 														</div>
 													</div>
-													<!-- /post -->
-
-													<!-- post -->
-													<div class="col-md-4">
-														<div class="post post-sm">
-															<a class="post-img" href="blog-post.html"><img src="./img/post-13.jpg" alt=""></a>
-															<div class="post-body">
-																<div class="post-category">
-																	<a href="category.html">Travel</a>
-																	<a href="category.html">Lifestyle</a>
-																</div>
-																<h3 class="post-title title-sm"><a href="blog-post.php?id="></a></h3>
-																<ul class="post-meta">
-																	<li><a href="author.html">John Doe</a></li>
-																	<li>20 April 2018</li>
-																</ul>
-															</div>
-														</div>
-													</div>
-													<!-- /post -->
-
-													<!-- post -->
-													<div class="col-md-4">
-														<div class="post post-sm">
-															<a class="post-img" href="blog-post.html"><img src="./img/post-12.jpg" alt=""></a>
-															<div class="post-body">
-																<div class="post-category">
-																	<a href="category.html">Lifestyle</a>
-																</div>
-																<h3 class="post-title title-sm"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-																<ul class="post-meta">
-																	<li><a href="author.html">John Doe</a></li>
-																	<li>20 April 2018</li>
-																</ul>
-															</div>
-														</div>
-													</div>
+												</div>
+												<?php
+												}
+												?>
 													<!-- /post -->
 												</div>
 											</div>
@@ -277,63 +250,14 @@ function createUrl($str, $id) {
 								</div>
 							</div>
 						</li>
-						<li class="has-dropdown megamenu">
-							<a href="#">Fashion</a>
-							<div class="dropdown">
-								<div class="dropdown-body">
-									<div class="row">
-										<div class="col-md-3">
-											<h4 class="dropdown-heading">Categories</h4>
-											<ul class="dropdown-list">
-												<li><a href="#">Lifestyle</a></li>
-												<li><a href="#">Fashion</a></li>
-												<li><a href="#">Technology</a></li>
-												<li><a href="#">Health</a></li>
-												<li><a href="#">Travel</a></li>
-											</ul>
-										</div>
-										<div class="col-md-3">
-											<h4 class="dropdown-heading">Lifestyle</h4>
-											<ul class="dropdown-list">
-												<li><a href="#">Lifestyle</a></li>
-												<li><a href="#">Fashion</a></li>
-												<li><a href="#">Health</a></li>
-											</ul>
-											<h4 class="dropdown-heading">Technology</h4>
-											<ul class="dropdown-list">
-												<li><a href="#">Lifestyle</a></li>
-												<li><a href="#">Travel</a></li>
-											</ul>
-										</div>
-										<div class="col-md-3">
-											<h4 class="dropdown-heading">Fashion</h4>
-											<ul class="dropdown-list">
-												<li><a href="#">Fashion</a></li>
-												<li><a href="#">Technology</a></li>
-											</ul>
-											<h4 class="dropdown-heading">Travel</h4>
-											<ul class="dropdown-list">
-												<li><a href="#">Lifestyle</a></li>
-												<li><a href="#">Healtth</a></li>
-												<li><a href="#">Fashion</a></li>
-											</ul>
-										</div>
-										<div class="col-md-3">
-											<h4 class="dropdown-heading">Health</h4>
-											<ul class="dropdown-list">
-												<li><a href="#">Technology</a></li>
-												<li><a href="#">Fashion</a></li>
-												<li><a href="#">Health</a></li>
-												<li><a href="#">Travel</a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li><a href="#">Technology</a></li>
-						<li><a href="#">Health</a></li>
-						<li><a href="#">Travel</a></li>
+					
+						<?php
+						for ($i=0; $i < count($categoryList); $i++) { 
+						?>
+						<li><a href="category.php?id=<?php echo $i + 1; ?>"><?php echo $categoryList[$i]['category_name']; ?></a></li>
+						<?php
+						}
+						?>
 					</ul>
 					<!-- /nav -->
 				</div>
@@ -343,14 +267,16 @@ function createUrl($str, $id) {
 			<!-- Aside Nav -->
 			<div id="nav-aside">
 				<ul class="nav-aside-menu">
-					<li><a href="index.html">Home</a></li>
+				<li><a href="index.php">Home</a></li>
 					<li class="has-dropdown"><a>Categories</a>
 						<ul class="dropdown">
-							<li><a href="#">Lifestyle</a></li>
-							<li><a href="#">Fashion</a></li>
-							<li><a href="#">Technology</a></li>
-							<li><a href="#">Travel</a></li>
-							<li><a href="#">Health</a></li>
+            			<?php
+						for ($i=0; $i < count($categoryList); $i++) { 
+						?>
+						<li><a href="category.php?id=<?php echo $i + 1; ?>"><?php echo $categoryList[$i]['category_name']; ?></a></li>
+						<?php
+						}
+						?>
 						</ul>
 					</li>
 					<li><a href="about.html">About Us</a></li>
@@ -624,11 +550,13 @@ function createUrl($str, $id) {
 						</div>
 						<div class="category-widget">
 							<ul>
-								<li><a href="#">Lifestyle <span>451</span></a></li>
-								<li><a href="#">Fashion <span>230</span></a></li>
-								<li><a href="#">Technology <span>40</span></a></li>
-								<li><a href="#">Travel <span>38</span></a></li>
-								<li><a href="#">Health <span>24</span></a></li>
+							<?php
+								foreach ($categoryList as $cat) {
+								?>
+									<li><a href="#"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
+								<?php
+								}
+								?>
 							</ul>
 						</div>
 					</div>
@@ -652,7 +580,7 @@ function createUrl($str, $id) {
 					<!-- post widget -->
 					<div class="aside-widget">
 						<div class="section-title">
-							<h2 class="title">Các bài đang nổi</h2>
+							<h2 class="title">Popular Posts</h2>
 						</div>
 						<!-- post -->
 						<?php 
