@@ -41,8 +41,7 @@ class Newspapers extends database
     // Lay bai moi nhat tu ? den ?
     public function loadMore($page, $limit)
     {
-        $start = ($limit * $page) - $limit;
-        $limit = $limit + 1;
+        $start = ($page - 1) * $limit;
         $sql = parent::$connection->prepare('SELECT * FROM newspapers ORDER BY newspaper_date DESC LIMIT ?, ?');
         $sql->bind_param('ii', $start, $limit);
         return parent::select($sql);

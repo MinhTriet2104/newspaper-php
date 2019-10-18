@@ -638,39 +638,11 @@ function createUrl($str, $id) {
 			<!-- row -->
 			<div class="row">
 			
-				<div class="col-md-8" id="content">
-        <?php 
-        foreach ($newsRecent as $newsRecent) {
-        ?>	
-					<!-- post -->
-					<div class="post post-row">
-						<a class="post-img" href="blog-post.html"><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt=""></a>
-						<div class="post-body">
-							<div class="post-category">
-								<a href="category.html"><?php  echo $categoryModels->getNameById($newsRecent['newspaper_category_id'])['category_name']; ?></a>							
-							</div>
-							<h3 class="post-title"><a href="category.php?id="<?php echo $news['newspaper_category_id'];?>><?php echo strip_tags( $newsRecent['newspaper_title']); ?></a></h3>
-							<ul class="post-meta">
-								<li><a href="author.html"><?php echo $newspaperModels->getAuthorById($news['newspaper_author_id'])['author_name']; ?></a></li>
-								<?php
-								$date = new DateTime($newsRecent['newspaper_date']);
-								$date = $date->format('d M Y, H:i');
-								?>
-								<li><?php echo $date; ?></li>
-							</ul>
-							<p><?php echo strip_tags( substr( $newsRecent['newspaper_content'],0, 150)).'...'; ?></p>
-						</div>
-					</div>
-					<!-- /post -->
-
-					<!-- post -->
-				<?php 
-			}
-			?>
-					<!-- /post -->
-
+				<div class="col-md-8">
+				  <!-- post -->
+          <div id="content"></div>
 					<div class="section-row loadmore text-center">
-						<a class="primary-button" class="load-more">Load More</a>
+						<input type="button" class="primary-button" id="load-more" value="load more">
 					</div>
 				</div>
 				<div class="col-md-4">
@@ -811,7 +783,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
-  <script src="./js/ajax.js"></script>
+  <script src="./js/index-loadmore.js"></script>
 </body>
 
 </html>
