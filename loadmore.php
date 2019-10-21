@@ -32,8 +32,14 @@ $categoryList = $categoryModels->getCategoriesList();
 
 $newspaperModels=new Newspapers();
 
-$page = isset($_GET['page']) ? $_GET['page'] : 1; 
-$newsRecent = $newspaperModels->loadMore($page, 5);
+$page = isset($_GET['page']) ? $_GET['page'] : 1;
+if (isset($_GET['category'])) {
+  $categoryId = $_GET['category'];
+  $newsRecent = $newspaperModels->loadMoreCategory($categoryId, $page, 5);
+}
+else {
+  $newsRecent = $newspaperModels->loadMore($page, 5);
+}
 
 foreach ($newsRecent as $news) {
 $url = createUrl($news['newspaper_title'], $news['newspaper_id']);

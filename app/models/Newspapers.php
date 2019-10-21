@@ -47,6 +47,15 @@ class Newspapers extends database
         return parent::select($sql);
     }
 
+    // Load more ? bai moi nhat theo category id
+    public function loadMoreCategory($id, $page, $limit)
+    {
+        $start = ($page - 1) * $limit;
+        $sql = parent::$connection->prepare('SELECT * FROM ( SELECT * FROM newspapers where newspaper_category_id = ? ORDER BY newspaper_date DESC LIMIT ?, ?) sub');
+        $sql->bind_param('iii', $id, $start, $limit);
+        return parent::select($sql);
+    }
+
     // Lay ? bai lien quan (random)
     public function getRelative($categoryId, $newsId, $limit)
     {
