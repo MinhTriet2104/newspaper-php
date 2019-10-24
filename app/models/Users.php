@@ -30,10 +30,11 @@ class Users extends Database
     }
   
     // Creat new user
-    public function createUser($username, $password) {
+    public function createUser($username, $password, $email) {
       $role = "member";
-      $sql = parent::$connection->prepare('INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `user_role`) VALUES (NULL, ?, ?, ?)');
-      $sql->bind_param('sss', $username, $password, $role);
+      $avatar = "https://i.imgur.com/e6A4vLz.jpg";
+      $sql = parent::$connection->prepare('INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `user_email`, `user_role`, `user_avatar`) VALUES (NULL, ?, ?, ?, ?, ?)');
+      $sql->bind_param('sssss', $username, $password, $email, $role, $avatar);
       return $sql->execute();
     }
 }   

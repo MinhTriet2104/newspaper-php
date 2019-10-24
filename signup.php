@@ -140,7 +140,7 @@
         <div class="form-group">
 		</div>
 		<div class="form-group text-center">
-            <button type="submit" class="btn btn-primary btn-lg disabled" id="signup">Sign Up</button>
+            <button type="submit" class="btn btn-primary btn-lg" id="signup">Sign Up</button>
         </div>
     </form>
 	<div class="text-center">Already have an account? <a href="./login.php">Login here</a></div>
