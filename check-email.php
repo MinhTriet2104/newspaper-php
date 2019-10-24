@@ -5,7 +5,7 @@ spl_autoload_register(function ($className) {
     require './app/models/' . $className . '.php';
 });
 
-$username = $_POST['username'];
+$email = $_POST['email'];
 $userModel = new Users();
-$result = $userModel->findUsername($username);
+$result = $userModel->findEMail($email);
 echo count($result);

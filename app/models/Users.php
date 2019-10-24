@@ -21,6 +21,13 @@ class Users extends Database
       $sql->bind_param('s', $username);
       return parent::select($sql);
     }
+
+    // find email
+    public function findEmail($email) {
+      $sql = parent::$connection->prepare('SELECT * FROM users WHERE user_email = ?');
+      $sql->bind_param('s', $email);
+      return parent::select($sql);
+    }
   
     // Creat new user
     public function createUser($username, $password) {
