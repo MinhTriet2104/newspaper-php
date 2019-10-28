@@ -88,7 +88,7 @@ if (isset($_GET['id'])) {
 
 					<!-- logo -->
 					<div class="nav-logo">
-						<a href="index.html" class="logo"><img src="./img/logo.png" alt=""></a>
+						<a href="index.php" class="logo"><img src="./img/logo.png" alt=""></a>
 					</div>
 					<!-- /logo -->
 
@@ -120,7 +120,7 @@ if (isset($_GET['id'])) {
 							<div class="dropdown">
 								<div class="dropdown-body">
 									<ul class="dropdown-list">
-										<li><a href="category.html">Category page</a></li>
+										<li><a href="category.php">Category page</a></li>
 										<li><a href="blog-post.html">Post page</a></li>
 										<li><a href="author.html">Author page</a></li>
 										<li><a href="about.html">About Us</a></li>
@@ -153,19 +153,19 @@ if (isset($_GET['id'])) {
 												<?php
 												$categoryNews = $newspaperModels->getLimitRecentByCategoryId(1, 3);
 												// echo var_dump($categoryNews);
-												foreach ($categoryNews as $news) {
-												?>
+												foreach ($categoryNews as $news) {												
+												?>										
 												<!-- post -->
 												<div class="col-md-4">
 													<div class="post post-sm">
-														<a class="post-img" href="blog-post.html"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
+														<a class="post-img" href="blog-post/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
 														<div class="post-body">
 															<div class="post-category">
-																<a href="category.html"><?php echo $categoryList[0]['category_name']; ?></a>
+																<a href="category.php?id=<?php echo $categoryList[0]['category_id']; ?>"><?php echo $categoryList[0]['category_name']; ?></a>
 															</div>
-															<h3 class="post-title title-sm"><a href="blog-post.html"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
+															<h3 class="post-title title-sm"><a href="blog-post/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
 															<ul class="post-meta">
-																<li><a href="author.html"><?php echo $newspaperModels->getAuthorById(1)['author_name']; ?></a></li>
+																<li><a href="author.html"><?php echo $newspaperModels->getAuthorById(3)['author_name']; ?></a></li>
 																<?php
 																$date = new DateTime($news['newspaper_date']);
 																$date = $date->format('d M Y, H:i');
@@ -176,6 +176,7 @@ if (isset($_GET['id'])) {
 													</div>
 												</div>
 												<?php
+												
 												}
 												?>
 												</div>
@@ -189,17 +190,17 @@ if (isset($_GET['id'])) {
 											<div id="tab<?php echo $i; ?>" class="tab-pane fade in">
 												<div class="row">
 												<?php
-												$categoryNews = $newspaperModels->getLimitRecentByCategoryId($i, 3);
+												$categoryNews = $newspaperModels->getLimitRecentByCategoryId($id, 3);
 												// echo var_dump($categoryNews);
 												foreach ($categoryNews as $news) {
 												?>
 												<!-- post -->
-												<div class="col-md-4">
+												<div class="col-md-5">
 													<div class="post post-sm">
-														<a class="post-img" href="blog-post.html"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
+														<a class="post-img" href="blog-post/<?php echo createUrl($news[$i]['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
 														<div class="post-body">
 															<div class="post-category">
-																<a href="category.php"><?php echo $categoryList[$i - 1]['category_name']; ?></a>
+																<a href="category.php?id=<?php echo $news['newspaper_category_id']; ?>"><?php echo $categoryList[$i - 1]['category_name']; ?></a>
 															</div>
 															<h3 class="post-title title-sm"><a href="blog-post.html"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
 															<ul class="post-meta">
@@ -219,6 +220,7 @@ if (isset($_GET['id'])) {
 												</div>
 											</div>
 											<?php
+											
 											}
 											?>
 										</div>
@@ -258,10 +260,7 @@ if (isset($_GET['id'])) {
 					<li><a href="about.html">About Us</a></li>
 					<li><a href="contact.html">Contacts</a></li>
 					<li><a href="#">Advertise</a></li>
-					</li>
-					<li><a href="about.html">About Us</a></li>
-					<li><a href="contact.html">Contacts</a></li>
-					<li><a href="#">Advertise</a></li>
+					</li>					
 				</ul>
 				<button class="nav-close nav-aside-close"><span></span></button>
 			</div>
@@ -326,7 +325,7 @@ if (isset($_GET['id'])) {
 								<a class="post-img" href="blog-post.php/<?php echo createUrl($news[$i]['newspaper_title'], $news[$i]['newspaper_id']); ?>"><img src="<?php echo $news[$i]["newspaper_imgae"]; ?>" alt=""></a>
 								<div class="post-body">
 									<div class="post-category">
-										<a href="category.html"><?php echo $categoryModels->getNameById($id)['category_name'];  ?></a>
+										<a href="category.php?id=<?php echo $news[$i]['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($id)['category_name'];  ?></a>
 									</div>
 									<h3 class="post-title"><a href="blog-post.php/<?php echo createUrl($news[$i]['newspaper_title'], $news[$i]['newspaper_id']); ?>"><?php echo $news[$i]["newspaper_title"]; ?></a></h3>
 									<ul class="post-meta">
@@ -342,6 +341,7 @@ if (isset($_GET['id'])) {
 						</div>
 						<!-- /post -->
 				<?php  
+				if ($i === 2) echo '<div class="clearfix visible-md visible-lg"></div>';
 					}
 					?>
 					</div>
@@ -429,11 +429,11 @@ if (isset($_GET['id'])) {
 					<!-- post widget -->
 					<div class="aside-widget">
 						<div class="section-title">
-							<h2 class="title">Các bài đang nổi</h2>
+							<h2 class="title">Popular Posts</h2>
 						</div>
 						<!-- post -->
 						<?php 
-						 $hotNews = $newspaperModels->getHotNews(6);
+						 $hotNews = $newspaperModels->getHotNews(4);
 						 foreach ($hotNews as $news) {
 						 ?>
 						<div class="post post-widget">
@@ -442,7 +442,7 @@ if (isset($_GET['id'])) {
 								<div class="post-category">
 									<a href="category.php?id=<?php echo $news['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></a>
 								</div>
-								<h3 class="post-title"><a href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
+								<h3 class="post-title"><a href="blog-post.php/<?php createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
 							</div>
 						</div>
 						<?php 
@@ -464,7 +464,7 @@ if (isset($_GET['id'])) {
 							<?php 
 							$newsRecent = $newspaperModels->getLimitRecent(6);
 							foreach ($newsRecent as $newsRecent) {?>
-								<li><a href=""><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt=""></a></li>		
+								<li><a href="blog-post.php/<?php echo createUrl($newsRecent['newspaper_title'], $newsRecent['newspaper_id']); ?>"><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt=""></a></li>		
 								<?php
 							}						
 								?>
@@ -488,6 +488,7 @@ if (isset($_GET['id'])) {
 	</div>
 	<!-- /SECTION -->
 
+	<!-- FOOTER -->
 	<footer id="footer">
 		<!-- container -->
 		<div class="container">
@@ -496,7 +497,7 @@ if (isset($_GET['id'])) {
 				<div class="col-md-3">
 					<div class="footer-widget">
 						<div class="footer-logo">
-							<a href="/callie/index.php" class="logo"><img src="<?php echo BASE_URL; ?>/img/logo-alt.png" alt=""></a>
+							<a href="index.php" class="logo"><img src="./img/logo-alt.png" alt=""></a>
 						</div>
 						<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
 						<ul class="contact-social">
@@ -513,9 +514,9 @@ if (isset($_GET['id'])) {
 						<div class="category-widget">
 							<ul>
 							<?php
-								foreach ($categoryList as $cat) {
+								for ($i=0; $i < count($categoryList); $i++) { 
 								?>
-									<li><a href="/callie/category.php?id=<?php echo $cat['category_id']; ?>"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
+									<li><a href="category.php?id=<?php echo $i + 1; ?>"><?php echo $categoryList[$i]['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($categoryList[$i]['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
 								<?php
 								}
 								?>
@@ -528,14 +529,14 @@ if (isset($_GET['id'])) {
 						<h3 class="footer-title">Tags</h3>
 						<div class="tags-widget">
 							<ul>
+
 							<?php
-								foreach ($categoryList as $cat) {
-								?>
-									<li><a href="/callie/category.php?id=<?php echo $cat['category_id']; ?>"><?php echo $cat['category_name']; ?> </a></li>
-								<?php
-								}
-								?>
-								
+						for ($i=0; $i < count($categoryList); $i++) { 
+						?>
+						<li><a href="category.php?id=<?php echo $i + 1; ?>"><?php echo $categoryList[$i]['category_name']; ?></a></li>
+						<?php
+						}
+						?>							
 							</ul>
 						</div>
 					</div>
@@ -559,7 +560,7 @@ if (isset($_GET['id'])) {
 			<div class="footer-bottom row">
 				<div class="col-md-6 col-md-push-6">
 					<ul class="footer-nav">
-						<li><a href="/callie/index.php">Home</a></li>
+						<li><a href="index.php">Home</a></li>
 						<li><a href="about.html">About Us</a></li>
 						<li><a href="contact.html">Contacts</a></li>
 						<li><a href="#">Advertise</a></li>

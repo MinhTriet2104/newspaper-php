@@ -91,7 +91,7 @@ function createUrl($str, $id) {
 
 					<!-- logo -->
 					<div class="nav-logo">
-						<a href="index.html" class="logo"><img src="<?php echo BASE_URL; ?>/img/logo.png" alt=""></a>
+						<a href="/callie/index.php" class="logo"><img src="<?php echo BASE_URL; ?>/img/logo.png" alt=""></a>
 					</div>
 					<!-- /logo -->
 
@@ -119,7 +119,7 @@ function createUrl($str, $id) {
 					<!-- nav -->
 					<ul class="nav-menu">
 						<li class="has-dropdown">
-							<a href="index.html">Trang Chủ</a>
+							<a href="/callie/index.php">Trang Chủ</a>
 							<div class="dropdown">
 								<div class="dropdown-body">
 									<ul class="dropdown-list">
@@ -161,7 +161,7 @@ function createUrl($str, $id) {
 														<a class="post-img" href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
 														<div class="post-body">
 															<div class="post-category">
-																<a href="category.php?id=<?php echo $news['newspaper_category_id'] ?>"><?php echo $categoryList[0]['category_name']; ?></a>
+																<a href="/callie/category.php?id=<?php echo $news['newspaper_category_id'] ?>"><?php echo $categoryList[0]['category_name']; ?></a>
 															</div>
 															<h3 class="post-title title-sm"><a href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
 															<ul class="post-meta">
@@ -182,69 +182,6 @@ function createUrl($str, $id) {
 												</div>
 											</div>
 											<!-- /tab1 -->
-
-											<!-- tab2 -->
-											<div id="tab2" class="tab-pane fade in">
-												<div class="row">
-													<!-- post -->
-													<div class="col-md-4">
-														<div class="post post-sm">
-															<a class="post-img" href="blog-post.html"><img src="./img/post-5.jpg" alt=""></a>
-															<div class="post-body">
-																<div class="post-category">
-																	<a href="category.html">Lifestyle</a>
-																</div>
-																<h3 class="post-title title-sm"><a href="blog-post.html">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-																<ul class="post-meta">
-																	<li><a href="author.html">John Doe</a></li>
-																	<li>20 April 2018</li>
-																</ul>
-															</div>
-														</div>
-													</div>
-													<!-- /post -->
-
-													<!-- post -->
-													<div class="col-md-4">
-														<div class="post post-sm">
-															<a class="post-img" href="blog-post.html"><img src="./img/post-8.jpg" alt=""></a>
-															<div class="post-body">
-																<div class="post-category">
-																	<a href="category.html">Fashion</a>
-																	<a href="category.html">Lifestyle</a>
-																</div>
-																<h3 class="post-title title-sm"><a href="blog-post.html">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-																<ul class="post-meta">
-																	<li><a href="author.html">John Doe</a></li>
-																	<li>20 April 2018</li>
-																</ul>
-															</div>
-														</div>
-													</div>
-													<!-- /post -->
-
-													<!-- post -->
-													<div class="col-md-4">
-														<div class="post post-sm">
-															<a class="post-img" href="blog-post.html"><img src="./img/post-9.jpg" alt=""></a>
-															<div class="post-body">
-																<div class="post-category">
-																	<a href="category.html">Lifestyle</a>
-																</div>
-																<h3 class="post-title title-sm"><a href="blog-post.html">Mel ut impetus suscipit tincidunt. Cum id ullum laboramus persequeris.</a></h3>
-																<ul class="post-meta">
-																	<li><a href="author.html">John Doe</a></li>
-																	<li>20 April 2018</li>
-																</ul>
-															</div>
-														</div>
-													</div>
-													<!-- /post -->
-												</div>
-											</div>
-											<!-- /tab2 -->
-
-											<!-- /tab3 tab4 .. -->
 										</div>
 									</div>
 								</div>
@@ -254,7 +191,7 @@ function createUrl($str, $id) {
 						<?php
 						for ($i=0; $i < count($categoryList); $i++) { 
 						?>
-						<li><a href="category.php?id=<?php echo $i + 1; ?>"><?php echo $categoryList[$i]['category_name']; ?></a></li>
+						<li><a href="/project_be1/callie/category.php?id=<?php echo $i + 1; ?>"><?php echo $categoryList[$i]['category_name']; ?></a></li>
 						<?php
 						}
 						?>
@@ -267,13 +204,13 @@ function createUrl($str, $id) {
 			<!-- Aside Nav -->
 			<div id="nav-aside">
 				<ul class="nav-aside-menu">
-				<li><a href="index.php">Home</a></li>
+				<li><a href="project_be1/callie/index.php">Home</a></li>
 					<li class="has-dropdown"><a>Categories</a>
 						<ul class="dropdown">
             			<?php
 						for ($i=0; $i < count($categoryList); $i++) { 
 						?>
-						<li><a href="category.php?id=<?php echo $i + 1; ?>"><?php echo $categoryList[$i]['category_name']; ?></a></li>
+						<li><a href="/project_be1/callie/category.php?id=<?php echo $i + 1; ?>"><?php echo $categoryList[$i]['category_name']; ?></a></li>
 						<?php
 						}
 						?>
@@ -296,7 +233,7 @@ function createUrl($str, $id) {
 				<div class="row">
 					<div class="col-md-10">
 						<div class="post-category">
-							<a href="category.php?id=<?php echo $newspaper['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($newspaper['newspaper_category_id'])['category_name']; ?></a>
+							<a href="/project_be1/callie/category.php?id=<?php echo $newspaper['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($newspaper['newspaper_category_id'])['category_name']; ?></a>
 						</div>
 						<h1><?php echo $newspaper['newspaper_title']; ?></h1>
 						<ul class="post-meta">
@@ -350,29 +287,11 @@ function createUrl($str, $id) {
 						<div class="post-tags">
 							<ul>
 								<li>TAGS:</li>
-								<li><a href="category.php?id=<?php echo $id; ?>"><?php echo $categoryModels->getNameById($newspaper['newspaper_category_id'])['category_name']; ?></a></li>
+								<li><a href="/project_be1/callie/category.php?id=<?php echo $id; ?>"><?php echo $categoryModels->getNameById($newspaper['newspaper_category_id'])['category_name']; ?></a></li>
 							</ul>
 						</div>
 					</div>
 					<!-- /post tags -->
-
-					<!-- post nav -->
-					<div class="section-row">
-						<div class="post-nav">
-							<div class="prev-post">
-								<a class="post-img" href="blog-post.html"><img src="./img/widget-8.jpg" alt=""></a>
-								<h3 class="post-title"><a href="#">Sed ut perspiciatis, unde omnis iste natus error sit</a></h3>
-								<span>Previous post</span>
-							</div>
-
-							<div class="next-post">
-								<a class="post-img" href="blog-post.html"><img src="./img/widget-10.jpg" alt=""></a>
-								<h3 class="post-title"><a href="#">Postea senserit id eos, vivendo periculis ei qui</a></h3>
-								<span>Next post</span>
-							</div>
-						</div>
-					</div>
-					<!-- /post nav  -->
 
 					<!-- /related post -->
 					<div>
@@ -387,12 +306,12 @@ function createUrl($str, $id) {
 							?>
 							<div class="col-md-4">
 								<div class="post post-sm">
-									<a class="post-img" href="blog-post.html"><img src="<?php echo $news['newspaper_imgae'] ?>" alt=""></a>
+									<a class="post-img" href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae'] ?>" alt=""></a>
 									<div class="post-body">
 										<div class="post-category">
-											<a href="category.php?id=<?php echo $news['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></a>
+											<a 	href="/project_be1/callie/category?id=<?php echo $newspaper['newspaper_category_id'];?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></a>
 										</div>
-										<h3 class="post-title title-sm"><a href="blog-post.html"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
+										<h3 class="post-title title-sm"><a href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
 										<ul class="post-meta">
 											<li><a href="author.html"><?php echo $author; ?></a></li>
 											<?php
@@ -553,7 +472,7 @@ function createUrl($str, $id) {
 							<?php
 								foreach ($categoryList as $cat) {
 								?>
-									<li><a href="#"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
+									<li><a href="/project_be1/callie/category?id=<?php echo $cat['category_id']; ?>"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
 								<?php
 								}
 								?>
@@ -591,7 +510,7 @@ function createUrl($str, $id) {
 						<a class="post-img" href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae']; ?>" alt="news-img"></a>
 						<div class="post-body">
 								<div class="post-category">
-									<a href="category.php?id=<?php echo $news['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></a>
+									<a href="/project_be1/callie/category.php?id=<?php echo $news['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></a>
 								</div>
 								<h3 class="post-title"><a href="blog-post.php/<?php createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
 							</div>
@@ -613,10 +532,10 @@ function createUrl($str, $id) {
 							<?php 
 							$newsRecent = $newspaperModels->getLimitRecent(6);
 							foreach ($newsRecent as $newsRecent) {?>
-								<li><a href="#"><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt=""></a></li>		
+								<li><a href="blog-post.php/<?php echo createUrl($newsRecent['newspaper_title'], $newsRecent['newspaper_id']); ?>"><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt="blog_img"></a></li>		
 								<?php
-							}						
-								?>
+							  }						
+								?>				
 							</ul>
 						</div>
 					</div>
@@ -646,7 +565,7 @@ function createUrl($str, $id) {
 				<div class="col-md-3">
 					<div class="footer-widget">
 						<div class="footer-logo">
-							<a href="index.html" class="logo"><img src="<?php echo BASE_URL; ?>/img/logo-alt.png" alt=""></a>
+							<a href="/callie/index.php" class="logo"><img src="<?php echo BASE_URL; ?>/img/logo-alt.png" alt=""></a>
 						</div>
 						<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
 						<ul class="contact-social">
@@ -665,7 +584,7 @@ function createUrl($str, $id) {
 							<?php
 								foreach ($categoryList as $cat) {
 								?>
-									<li><a href="#"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
+									<li><a href="/callie/category.php?id=<?php echo $cat['category_id']; ?>"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
 								<?php
 								}
 								?>
@@ -681,7 +600,7 @@ function createUrl($str, $id) {
 							<?php
 								foreach ($categoryList as $cat) {
 								?>
-									<li><a href="#"><?php echo $cat['category_name']; ?> </a></li>
+									<li><a href="/callie/category.php?id=<?php echo $cat['category_id']; ?>"><?php echo $cat['category_name']; ?> </a></li>
 								<?php
 								}
 								?>
@@ -709,7 +628,7 @@ function createUrl($str, $id) {
 			<div class="footer-bottom row">
 				<div class="col-md-6 col-md-push-6">
 					<ul class="footer-nav">
-						<li><a href="index.html">Home</a></li>
+						<li><a href="/callie/index.php">Home</a></li>
 						<li><a href="about.html">About Us</a></li>
 						<li><a href="contact.html">Contacts</a></li>
 						<li><a href="#">Advertise</a></li>

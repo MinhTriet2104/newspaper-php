@@ -511,7 +511,7 @@ function createUrl($str, $id) {
 								<div class="post-category">
 									<a href="category.php?id=<?php echo $news['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></a>
 								</div>
-								<h3 class="post-title"><a href="blog-post.php/<?php createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
+								<h3 class="post-title"><a href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
 							</div>
 						</div>
             <?php
@@ -689,7 +689,7 @@ function createUrl($str, $id) {
 				<div class="col-md-3">
 					<div class="footer-widget">
 						<div class="footer-logo">
-							<a href="index.html" class="logo"><img src="./img/logo-alt.png" alt=""></a>
+							<a href="/callie/index.php" class="logo"><img src="<?php echo BASE_URL; ?>/img/logo-alt.png" alt=""></a>
 						</div>
 						<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
 						<ul class="contact-social">
@@ -708,11 +708,10 @@ function createUrl($str, $id) {
 							<?php
 								foreach ($categoryList as $cat) {
 								?>
-									<li><a href="#"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
+									<li><a href="/callie/category.php?id=<?php echo $cat['category_id']; ?>"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
 								<?php
 								}
 								?>
-								
 							</ul>
 						</div>
 					</div>
@@ -725,7 +724,7 @@ function createUrl($str, $id) {
 							<?php
 								foreach ($categoryList as $cat) {
 								?>
-									<li><a href="#"><?php echo $cat['category_name']; ?> </a></li>
+									<li><a href="/callie/category.php?id=<?php echo $cat['category_id']; ?>"><?php echo $cat['category_name']; ?> </a></li>
 								<?php
 								}
 								?>
@@ -753,7 +752,7 @@ function createUrl($str, $id) {
 			<div class="footer-bottom row">
 				<div class="col-md-6 col-md-push-6">
 					<ul class="footer-nav">
-						<li><a href="index.php">Home</a></li>
+						<li><a href="/project_be1/callie/index.php">Home</a></li>
 						<li><a href="about.html">About Us</a></li>
 						<li><a href="contact.html">Contacts</a></li>
 						<li><a href="#">Advertise</a></li>
