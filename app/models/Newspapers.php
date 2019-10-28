@@ -79,13 +79,34 @@ class Newspapers extends database
         $sql->bind_param('i', $id);
         return parent::select($sql)[0];
     }
-    
 
-	// Lay 3 bai co so luong view va trong khoang 30 ngay tro lai
-	public function getHotNews($limit)
+    // Lay 3 bai co so luong view va trong khoang 30 ngay tro lai
+    public function getHotNews($limit)
     {
-        $sql = parent::$connection->prepare('SELECT * FROM newspapers WHERE DATEDIFF(CURDATE(), newspaper_date) <= 30 ORDER BY newspaper_view DESC LIMIT 0, ?');
-		$sql->bind_param('i', $limit);
-		return parent::select($sql);
-	}
+      $sql = parent::$connection->prepare('SELECT * FROM newspapers WHERE DATEDIFF(CURDATE(), newspaper_date) <= 30 ORDER BY newspaper_view DESC LIMIT 0, ?');
+      $sql->bind_param('i', $limit);
+      return parent::select($sql);
+    }
+  
+    public function addNewspaper($newspaperTitle, $newspaperImgae, $newspaperAuthorId, $newspaperDate,$newspaperContent, $newspaperView,$newspaperCategoryId)
+    {
+        $sql = parent::$connection->prepare('INSERT INTO newspapers (newspaper_title, newspaper_imgae, newspaper_author_id, newspaper_date, newspaper_content, newspaper_view, newspaper_category_id) VALUES (?, ?, ?, ?, ?, ?, ?)');
+        $sql->bind_param('ssissii', $newspaperTitle, $newspaperImgae, $newspaperAuthorId, $newspaperDate,$newspaperContent, $newspaperView,$newspaperCategoryId);
+        return $sql->execute();
+    }
+    // Xoa sp
+    public function deleteNewspaper($newspaperId)
+    {
+        $sql = parent::$connection->prepare('DELETE FROM newspapers WHERE newspapers.`newspaper_id` = ?');
+        $sql->bind_param('i', $newspaperId);
+        return $sql->execute();
+    }
+
+    //Cập nhật sp
+    public function updateNewspaper($newspaperTitle, $newspaperImage, $newspaperAuthorId, $newspaperDate,$newspaperContent, $newspaperView,$newspaperCategoryId,$newspaperId)
+    {
+        $sql = parent::$connection->prepare('UPDATE newspapers SET newspaper_title = ?, newspaper_imgae = ?, newspaper_author_id = ?, newspaper_date = ?,  newspaper_content = ?, newspaper_view = ?, newspaper_category_id = ? WHERE newspapers.`newspaper_id` = ?');
+        $sql->bind_param('ssissiii', $newspaperTitle, $newspaperImage, $newspaperAuthorId, $newspaperDate,$newspaperContent, $newspaperView,$newspaperCategoryId,$newspaperId);
+        return $sql->execute();
+    }
 }
