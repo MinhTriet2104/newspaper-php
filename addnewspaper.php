@@ -20,7 +20,7 @@ if(!empty($_POST['newspaperTitle']) && !empty($_POST['newspaperImage']) && !empt
   $newspaperTitle= $_POST['newspaperTitle'];
   $newspaperImgae= $_POST['newspaperImage'];
   $newspaperAuthorId= $_POST['newspaperAuthorId'];
-  $newspaperDate= $newspaperDate.date('Y-m-d h:i:s');
+  $newspaperDate= $newspaperDate.gmdate('Y-m-d H:i:s', time() + 7 * 3600);
   $newspaperContent= $_POST['newspaperContent'];
   $newspaperView= $_POST['newspaperView'];
   $newspaperCategoryId= $_POST['newspaperCategoryId'];
