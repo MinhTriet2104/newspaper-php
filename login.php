@@ -13,7 +13,7 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
 	if ($user) {
     $_SESSION['isLogin'] = true;
     $_SESSION['userId'] = $user['user_id'];
-		header("location:index.php");
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
 	} else {
 		$notification = "<div class='alert alert-danger text-center' role='alert'>Wrong Username or Password</div>";
 	}
