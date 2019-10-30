@@ -340,6 +340,7 @@ if (isset($_GET['id'])) {
 								</div>
 							</div>
 						</div>
+            <?php if ($i == 2) echo '<div class="clearfix visible-md visible-lg"></div>'; ?>
 						<!-- /post -->
 				<?php  
 					}
