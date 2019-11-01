@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Oct 18, 2019 at 06:11 AM
--- Server version: 5.7.26
--- PHP Version: 7.2.18
+-- Máy chủ: 127.0.0.1
+-- Thời gian đã tạo: Th10 31, 2019 lúc 06:08 AM
+-- Phiên bản máy phục vụ: 10.1.37-MariaDB
+-- Phiên bản PHP: 7.3.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `be1_18211tt1631`
+-- Cơ sở dữ liệu: `be1_18211tt1631`
 --
 CREATE DATABASE IF NOT EXISTS `be1_18211tt1631` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE `be1_18211tt1631`;
@@ -27,18 +27,16 @@ USE `be1_18211tt1631`;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `authors`
+-- Cấu trúc bảng cho bảng `authors`
 --
 
-DROP TABLE IF EXISTS `authors`;
-CREATE TABLE IF NOT EXISTS `authors` (
-  `author_id` int(11) NOT NULL AUTO_INCREMENT,
-  `author_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`author_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `authors` (
+  `author_id` int(11) NOT NULL,
+  `author_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `authors`
+-- Đang đổ dữ liệu cho bảng `authors`
 --
 
 INSERT INTO `authors` (`author_id`, `author_name`) VALUES
@@ -76,18 +74,16 @@ INSERT INTO `authors` (`author_id`, `author_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `categories`
+-- Cấu trúc bảng cho bảng `categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
-  `category_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+CREATE TABLE `categories` (
+  `category_id` int(11) NOT NULL,
+  `category_name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `categories`
+-- Đang đổ dữ liệu cho bảng `categories`
 --
 
 INSERT INTO `categories` (`category_id`, `category_name`) VALUES
@@ -101,44 +97,45 @@ INSERT INTO `categories` (`category_id`, `category_name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `comments`
+-- Cấu trúc bảng cho bảng `comments`
 --
 
-DROP TABLE IF EXISTS `comments`;
-CREATE TABLE IF NOT EXISTS `comments` (
-  `comment_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `comments` (
+  `comment_id` int(11) NOT NULL,
   `comment_content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `comment_date` datetime NOT NULL,
   `comment_user_id` int(11) NOT NULL,
-  `comment_newspaper_id` int(11) NOT NULL,
-  PRIMARY KEY (`comment_id`),
-  KEY `comment_newspaper_id` (`comment_newspaper_id`),
-  KEY `comments_ibfk_1` (`comment_user_id`)
+  `comment_newspaper_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Đang đổ dữ liệu cho bảng `comments`
+--
+
+INSERT INTO `comments` (`comment_id`, `comment_content`, `comment_date`, `comment_user_id`, `comment_newspaper_id`) VALUES
+(1, 'WOW', '2019-10-28 15:07:00', 3, 58),
+(4, 'hello', '2019-10-28 15:07:00', 2, 2),
+(13, 'đẹp trai quá', '2019-10-29 19:55:57', 2, 58);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `newspapers`
+-- Cấu trúc bảng cho bảng `newspapers`
 --
 
-DROP TABLE IF EXISTS `newspapers`;
-CREATE TABLE IF NOT EXISTS `newspapers` (
-  `newspaper_id` int(10) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `newspapers` (
+  `newspaper_id` int(10) NOT NULL,
   `newspaper_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `newspaper_imgae` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `newspaper_author_id` int(11) NOT NULL,
   `newspaper_date` datetime NOT NULL,
   `newspaper_content` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `newspaper_view` int(12) NOT NULL,
-  `newspaper_category_id` int(11) NOT NULL,
-  PRIMARY KEY (`newspaper_id`),
-  KEY `newspaper_author_id` (`newspaper_author_id`),
-  KEY `newspaper_category_id` (`newspaper_category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `newspaper_category_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `newspapers`
+-- Đang đổ dữ liệu cho bảng `newspapers`
 --
 
 INSERT INTO `newspapers` (`newspaper_id`, `newspaper_title`, `newspaper_imgae`, `newspaper_author_id`, `newspaper_date`, `newspaper_content`, `newspaper_view`, `newspaper_category_id`) VALUES
@@ -208,30 +205,113 @@ INSERT INTO `newspapers` (`newspaper_id`, `newspaper_title`, `newspaper_imgae`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Cấu trúc bảng cho bảng `users`
 --
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE IF NOT EXISTS `users` (
-  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `users` (
+  `user_id` int(11) NOT NULL,
   `user_name` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_password` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_email` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`user_id`)
+  `user_role` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_avatar` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Constraints for dumped tables
+-- Đang đổ dữ liệu cho bảng `users`
+--
+
+INSERT INTO `users` (`user_id`, `user_name`, `user_password`, `user_email`, `user_role`, `user_avatar`) VALUES
+(1, 'admin', '1', 'admin@gmail.com', 'admin', 'https://i.imgur.com/e6A4vLz.jpg'),
+(2, 'triet', '1', 'minhtriet@gmail.com', 'admin', 'https://i.imgur.com/e6A4vLz.jpg'),
+(3, 'tuan', '1', 'tuan@gmail.com', 'member', 'https://i.imgur.com/e6A4vLz.jpg'),
+(4, 'phong', '1', 'phong@gmail.com', 'member', 'https://i.imgur.com/e6A4vLz.jpg');
+
+--
+-- Chỉ mục cho các bảng đã đổ
 --
 
 --
--- Constraints for table `comments`
+-- Chỉ mục cho bảng `authors`
+--
+ALTER TABLE `authors`
+  ADD PRIMARY KEY (`author_id`);
+
+--
+-- Chỉ mục cho bảng `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`category_id`);
+
+--
+-- Chỉ mục cho bảng `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`comment_id`),
+  ADD KEY `comment_newspaper_id` (`comment_newspaper_id`),
+  ADD KEY `comments_ibfk_1` (`comment_user_id`);
+
+--
+-- Chỉ mục cho bảng `newspapers`
+--
+ALTER TABLE `newspapers`
+  ADD PRIMARY KEY (`newspaper_id`),
+  ADD KEY `newspaper_author_id` (`newspaper_author_id`),
+  ADD KEY `newspaper_category_id` (`newspaper_category_id`);
+
+--
+-- Chỉ mục cho bảng `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT cho các bảng đã đổ
+--
+
+--
+-- AUTO_INCREMENT cho bảng `authors`
+--
+ALTER TABLE `authors`
+  MODIFY `author_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+
+--
+-- AUTO_INCREMENT cho bảng `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT cho bảng `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT cho bảng `newspapers`
+--
+ALTER TABLE `newspapers`
+  MODIFY `newspaper_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+
+--
+-- AUTO_INCREMENT cho bảng `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Các ràng buộc cho các bảng đã đổ
+--
+
+--
+-- Các ràng buộc cho bảng `comments`
 --
 ALTER TABLE `comments`
   ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`comment_user_id`) REFERENCES `users` (`user_id`),
   ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`comment_newspaper_id`) REFERENCES `newspapers` (`newspaper_id`);
 
 --
--- Constraints for table `newspapers`
+-- Các ràng buộc cho bảng `newspapers`
 --
 ALTER TABLE `newspapers`
   ADD CONSTRAINT `newspapers_ibfk_1` FOREIGN KEY (`newspaper_author_id`) REFERENCES `authors` (`author_id`),

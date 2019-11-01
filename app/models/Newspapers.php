@@ -109,4 +109,11 @@ class Newspapers extends database
         $sql->bind_param('ssissiii', $newspaperTitle, $newspaperImage, $newspaperAuthorId, $newspaperDate,$newspaperContent, $newspaperView,$newspaperCategoryId,$newspaperId);
         return $sql->execute();
     }
+    public function search($keyword)
+    {
+        $search = "%$keyword%";
+        $sql = parent::$connection->prepare('SELECT * FROM newspapers WHERE newspaper_title like ?');
+        $sql->bind_param('s', $search);
+        return parent::select($sql);
+    }
 }

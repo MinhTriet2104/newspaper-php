@@ -88,7 +88,7 @@ if (isset($_GET['id'])) {
 
 					<!-- logo -->
 					<div class="nav-logo">
-						<a href="index.html" class="logo"><img src="./img/logo.png" alt=""></a>
+						<a href="/callie/index.php" class="logo"><img src="./img/logo.png" alt=""></a>
 					</div>
 					<!-- /logo -->
 
@@ -97,8 +97,8 @@ if (isset($_GET['id'])) {
 						<button class="aside-btn"><i class="fa fa-bars"></i></button>
 						<button class="search-btn"><i class="fa fa-search"></i></button>
 						<div id="nav-search">
-							<form>
-								<input class="input" name="search" placeholder="Enter your search...">
+						<form method="get" action="/callie/search.php" >
+								<input class="input" name="keyword" placeholder="Enter your search...">
 							</form>
 							<button class="nav-close search-close">
 								<span></span>
@@ -119,10 +119,7 @@ if (isset($_GET['id'])) {
 							<a href="index.php">Trang chủ</a>
 							<div class="dropdown">
 								<div class="dropdown-body">
-									<ul class="dropdown-list">
-										<li><a href="category.html">Category page</a></li>
-										<li><a href="blog-post.html">Post page</a></li>
-										<li><a href="author.html">Author page</a></li>
+									<ul class="dropdown-list">										
 										<li><a href="about.html">About Us</a></li>
 										<li><a href="contact.html">Contacts</a></li>
 										<li><a href="blank.html">Regular</a></li>
@@ -497,7 +494,7 @@ if (isset($_GET['id'])) {
 				<div class="col-md-3">
 					<div class="footer-widget">
 						<div class="footer-logo">
-							<a href="/callie/index.php" class="logo"><img src="<?php echo BASE_URL; ?>/img/logo-alt.png" alt=""></a>
+							<a href="/callie/index.php" class="logo"><img src="callie/img/logo-alt.png" alt=""></a>
 						</div>
 						<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
 						<ul class="contact-social">

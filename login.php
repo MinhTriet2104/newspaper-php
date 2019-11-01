@@ -5,6 +5,7 @@ spl_autoload_register(function ($className) {
     require './app/models/' . $className . '.php';
 });
 
+$previousUrl = $_SERVER['HTTP_REFERER'];
 $notification = "";
 $_SESSION['isLogin'] = false;
 if (!empty($_POST['username']) && !empty($_POST['password'])) {
@@ -12,8 +13,9 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
   $user = $userModel->login($_POST['username'], $_POST['password']);
 	if ($user) {
     $_SESSION['isLogin'] = true;
-    $_SESSION['userId'] = $user['user_id'];
-    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    $_SESSION['userId'] = $user[0]['user_id'];
+    $previousUrl = $_POST['previous'];
+    header("location:$previousUrl");
 	} else {
 		$notification = "<div class='alert alert-danger text-center' role='alert'>Wrong Username or Password</div>";
 	}
@@ -129,6 +131,7 @@ if (!empty($_POST['username']) && !empty($_POST['password'])) {
 					</div>
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary btn-block btn-lg" value="Login">
+            <input type="hidden" value="<?php echo $previousUrl; ?>" name="previous">
 					</div>
 				</form>				
 				

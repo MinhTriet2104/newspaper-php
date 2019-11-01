@@ -1,21 +1,21 @@
 <?php
-session_start();
 require_once './config/Database.php';
 require_once './config/config.php';
 spl_autoload_register(function ($className) {
     require './app/models/' . $className . '.php';
 });
 
-$url = explode('-', $_SERVER['REQUEST_URI']);
-$id = $url[count($url) - 1];
+$keyword = '';
+if (isset($_GET['keyword'])) {
+	$keyword = $_GET['keyword'];
+	$newspaperModels=new Newspapers();
+	$newspaperModelsList=$newspaperModels->search($keyword);
+}
 
 $categoryModels = new Categories();
 $categoryList = $categoryModels->getCategoriesList();
 
-$newspaperModels=new Newspapers();
-$newspaper= $newspaperModels->getNewsById($id);
 
-$author=  $newspaperModels->getAuthorById($newspaper['newspaper_author_id'])['author_name'];
 
 $newspaperList= $newspaperModels->getNewspapersList();
 
@@ -123,7 +123,9 @@ function createUrl($str, $id) {
 							<a href="/callie/index.php">Trang Chủ</a>
 							<div class="dropdown">
 								<div class="dropdown-body">
-									<ul class="dropdown-list">																													
+									<ul class="dropdown-list">
+										<li><a href="category.php">Category page</a></li>
+										<li><a href="blog-post.html">Post page</a></li>									
 										<li><a href="about.html">About Us</a></li>
 										<li><a href="contact.html">Contacts</a></li>
 									</ul>
@@ -181,6 +183,11 @@ function createUrl($str, $id) {
 												</div>
 											</div>
 											<!-- /tab1 -->
+
+										
+											<!-- /tab2 -->
+
+											<!-- /tab3 tab4 .. -->
 										</div>
 									</div>
 								</div>
@@ -198,32 +205,12 @@ function createUrl($str, $id) {
 					<!-- /nav -->
 				</div>
 			</div>
-			<!-- /Main Nav -->
-
+			<!-- /Main Nav -->			
 			<!-- Aside Nav -->
-			<div id="nav-aside">
-				<ul class="nav-aside-menu">
-				<li><a href="callie/index.php">Home</a></li>
-					<li class="has-dropdown"><a>Categories</a>
-						<ul class="dropdown">
-            			<?php
-						for ($i=0; $i < count($categoryList); $i++) { 
-						?>
-						<li><a href="/callie/category.php?id=<?php echo $i + 1; ?>"><?php echo $categoryList[$i]['category_name']; ?></a></li>
-						<?php
-						}
-						?>
-						</ul>
-					</li>
-					<li><a href="about.html">About Us</a></li>
-					<li><a href="contact.html">Contacts</a></li>
-					<li><a href="#">Advertise</a></li>
-				</ul>
-				<button class="nav-close nav-aside-close"><span></span></button>
-			</div>
+			
 			<!-- /Aside Nav -->
 		</div>
-		<!-- /NAV -->
+		<!-- /NAV -->		
 
 		<!-- PAGE HEADER -->
 		<div id="post-header" class="page-header">
@@ -232,27 +219,17 @@ function createUrl($str, $id) {
 				<div class="row">
 					<div class="col-md-10">
 						<div class="post-category">
-							<a href="/callie/category.php?id=<?php echo $newspaper['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($newspaper['newspaper_category_id'])['category_name']; ?></a>
+							<a href="/callie/search.php"><H1>Search "<?php echo $keyword ?>"</H1></a>
 						</div>
-						<h1><?php echo $newspaper['newspaper_title']; ?></h1>
-						<ul class="post-meta">
-							<li><a href="author.html"><?php echo $author; ?></a></li>
-							<?php
-							$date = new DateTime($newspaper['newspaper_date']);
-							$date = $date->format('d M Y, H:i');
-							?>
-							<li><?php echo $date; ?></li>
-							<li><i class="fa fa-comments"></i> 3</li>
-							<li><i class="fa fa-eye"></i> <?php echo $newspaper['newspaper_view'];?></li>
-						</ul>
 					</div>
 				</div>
+			</div>
 			</div>
 		</div>
 		<!-- /PAGE HEADER -->
 	</header>
 	<!-- /HEADER -->
-
+	
 	<!-- section -->
 	<div class="section">
 		<!-- container -->
@@ -269,103 +246,58 @@ function createUrl($str, $id) {
 							<a href="#" ><i class="fa fa-envelope"></i><span>Email</span></a>
 						</div>
 					</div>
+					<?php  
+					for($i =0;$i<count($newspaperModelsList);$i++)
+					{
+				?>				
+						<!-- post -->
+						
+							<div class="post">
+								<a class="post-img" href="blog-post.php/<?php echo createUrl($newspaperModelsList[$i]['newspaper_title'], $newspaperModelsList[$i]['newspaper_id']); ?>"><img src="<?php echo $newspaperModelsList[$i]["newspaper_imgae"]; ?>" alt=""></a>
+								<div class="post-body">
+									<div class="post-category">
+										<a href="category.php?id=<?php echo $newspaperModelsList[$i]['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($newspaperModelsList[$i]['newspaper_category_id'])['category_name'];  ?></a>
+									</div>
+									<h3 class="post-title"><a href="blog-post.php/<?php echo createUrl($newspaperModelsList[$i]['newspaper_title'], $newspaperModelsList[$i]['newspaper_id']); ?>"><?php echo $newspaperModelsList[$i]["newspaper_title"]; ?></a></h3>
+									<ul class="post-meta">
+										<li><a href="author.html"><?php echo $newspaperModels->getAuthorById($newspaperModelsList[$i]['newspaper_author_id'])['author_name']; ?></a></li>
+										<?php
+                $date = new DateTime($newspaperModelsList[$i]['newspaper_date']);
+                $date = $date->format('d M Y, H:i');
+                ?>
+                <li><?php echo $date; ?></li>
+									</ul>
+								</div>
+							
+						</div>
+						<!-- /post -->
+				<?php  
+				if ($i%2 === 0) echo '<div class="clearfix visible-md visible-lg"></div>';
+					}
+					?>
 					<!-- /post share -->
 
 					<!-- post content -->
-					<div class="section-row">
-						<h3><?php echo $newspaper['newspaper_title']; ?></h3>
-						<figure>
-							<img src="<?php echo $newspaper['newspaper_imgae']; ?>" alt="">
-						</figure>
-						<?php echo $newspaper['newspaper_content'];?>
-					</div>
+					
 					<!-- /post content -->
 
 					<!-- post tags -->
-					<div class="section-row">
-						<div class="post-tags">
-							<ul>
-								<li>TAGS:</li>
-								<li><a href="/callie/category.php?id=<?php echo $id; ?>"><?php echo $categoryModels->getNameById($newspaper['newspaper_category_id'])['category_name']; ?></a></li>
-							</ul>
-						</div>
-					</div>
+				
 					<!-- /post tags -->
 
+					<!-- post nav -->
+				
+					<!-- /post nav  -->
+
 					<!-- /related post -->
-					<div>
-						<div class="section-title">
-							<h3 class="title">Related Posts</h3>
-						</div>
-						<div class="row">
-							<!-- post -->
-							<?php
-							$relative = $newspaperModels->getRelative($newspaper['newspaper_category_id'], $id, 3);
-							foreach ($relative as $news) {
-							?>
-							<div class="col-md-4">
-								<div class="post post-sm">
-									<a class="post-img" href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><img src="<?php echo $news['newspaper_imgae'] ?>" alt=""></a>
-									<div class="post-body">
-										<div class="post-category">
-											<a 	href="/callie/category?id=<?php echo $newspaper['newspaper_category_id'];?>"><?php echo $categoryModels->getNameById($news['newspaper_category_id'])['category_name']; ?></a>
-										</div>
-										<h3 class="post-title title-sm"><a href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($news['newspaper_title']); ?></a></h3>
-										<ul class="post-meta">
-											<li><a href="author.html"><?php echo $author; ?></a></li>
-											<?php
-											$date = new DateTime($newspaper['newspaper_date']);
-											$date = $date->format('d M Y, H:i');
-											?>
-											<li><?php echo $date; ?></li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<?php
-							}
-							?>
-							<!-- /post -->
-						</div>
-					</div>
+					
 					<!-- /related post -->
 
-					<!-- post comments -->
-					<div class="section-row">
-						<div class="post-comments" id="comment">
-              <input type="hidden" id="newsId" value="<?php echo $id; ?>">
-							<!-- comments -->
-						</div>
-					</div>
+					
 					<!-- /post comments -->
 
 					<!-- post reply -->
-					<div class="section-row">
-            <?php
-            if (isset($_SESSION['userId'])) {
-            echo "<input type='hidden' id='user-id' value='". $_SESSION['userId'] ."'>"
-            ?>
-            <div class="section-title">
-							<h3 class="title">Leave a comment</h3>
-						</div>
-						<form class="post-reply">
-							<div class="row">
-								<div class="col-md-12">
-									<div class="form-group">
-										<textarea class="input" name="message" placeholder="Message" id="message"></textarea>
-									</div>
-								</div>
-								<div class="col-md-12">
-									<input class="primary-button" type="button" value="Send" id="send">
-								</div>
-							</div>
-						</form>
-            <?php
-            } else {
-              echo "<h3>Hãy <a href='/callie/login.php' style='color: #ee4266;'>Đang nhập</a> để Comment</h3>";
-            }
-            ?>
-					</div>
+					
 					<!-- /post reply -->
 				</div>
 				<div class="col-md-4">
@@ -479,8 +411,9 @@ function createUrl($str, $id) {
 							foreach ($newsRecent as $newsRecent) {?>
 								<li><a href="blog-post.php/<?php echo createUrl($newsRecent['newspaper_title'], $newsRecent['newspaper_id']); ?>"><img src="<?php echo $newsRecent['newspaper_imgae']; ?>" alt="blog_img"></a></li>		
 								<?php
-							  }						
+							}						
 								?>				
+								
 							</ul>
 						</div>
 					</div>
@@ -492,8 +425,10 @@ function createUrl($str, $id) {
 							<img class="img-responsive" src="<?php echo BASE_URL; ?>/img/ad-1.jpg" alt="">
 						</a>
 					</div>
+					
 					<!-- /Ad widget -->
 				</div>
+		
 			</div>
 			<!-- /row -->
 		</div>
@@ -599,11 +534,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script src="<?php echo BASE_URL; ?>/js/bootstrap.min.js"></script>
 	<script src="<?php echo BASE_URL; ?>/js/jquery.stellar.min.js"></script>
 	<script src="<?php echo BASE_URL; ?>/js/main.js"></script>
-  <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
-  <script src="<?php echo BASE_URL; ?>/js/get-comment.js"></script>
+
 </body>
 
 </html>

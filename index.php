@@ -82,7 +82,7 @@ function createUrl($str, $id) {
 
 					<!-- logo -->
 					<div class="nav-logo">
-						<a href="index.html" class="logo"><img src="./img/logo.png" alt=""></a>
+						<a href="/callie/index.php" class="logo"><img src="./img/logo.png" alt=""></a>
 					</div>
 					<!-- /logo -->
 
@@ -91,8 +91,8 @@ function createUrl($str, $id) {
 						<button class="aside-btn"><i class="fa fa-bars"></i></button>
 						<button class="search-btn"><i class="fa fa-search"></i></button>
 						<div id="nav-search">
-							<form>
-								<input class="input" name="search" placeholder="Enter your search...">
+						<form method="get" action="/callie/search.php" >
+								<input class="input" name="keyword" placeholder="Enter your search...">
 							</form>
 							<button class="nav-close search-close">
 								<span></span>
@@ -114,10 +114,7 @@ function createUrl($str, $id) {
 							<div class="dropdown">
 								<div class="dropdown-body">
 									<ul class="dropdown-list">
-										<!-- Trang rieng cua tung danh muc -->
-										<li><a href="category.html">Category page</a></li> 
-						         <!-- Trang rieng cua newspaper -->
-										<li><a href="blog-post.html">Post page</a></li>									
+										<!-- Trang rieng cua tung danh muc -->																	
 										<li><a href="about.html">About Us</a></li>
 										<li><a href="contact.html">Contacts</a></li>
 									</ul>
@@ -283,7 +280,7 @@ function createUrl($str, $id) {
 							<div class="post-category">
 								<a href="category.php?id=<?php echo $hotNews[0]['newspaper_category_id']; ?>"><?php echo $categoryModels->getNameById($hotNews[0]['newspaper_category_id'])['category_name'] ?></a>
 							</div>
-							<h3 class="post-title title-lg"><a href="blog-post.php/<?php echo createUrl($news['newspaper_title'], $news['newspaper_id']); ?>"><?php echo strip_tags($hotNews[0]['newspaper_title']); ?></a></h3>
+							<h3 class="post-title title-lg"><a href="blog-post.php/<?php echo createUrl($hotNews[0]['newspaper_title'], $hotNews[0]['newspaper_id']); ?>"><?php echo strip_tags($hotNews[0]['newspaper_title']); ?></a></h3>
 							<ul class="post-meta">
                 <li><a href="author.html"><?php echo $newspaperModels->getAuthorById($hotNews[0]['newspaper_author_id'])['author_name']; ?></a></li>
                 <?php
@@ -471,7 +468,7 @@ function createUrl($str, $id) {
 								<?php
 								foreach ($categoryList as $cat) {
 								?>
-									<li><a href="#"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
+									<li><a href="category.php?id=<?php echo($cat['category_id']); ?>"><?php echo $cat['category_name']; ?> <span><?php echo ($newspaperModels->countCategory($cat['category_id'])['COUNT(newspaper_category_id)']); ?></span></a></li>
 								<?php
 								}
 								?>
@@ -689,7 +686,7 @@ function createUrl($str, $id) {
 				<div class="col-md-3">
 					<div class="footer-widget">
 						<div class="footer-logo">
-							<a href="/callie/index.php" class="logo"><img src="<?php echo BASE_URL; ?>/img/logo-alt.png" alt=""></a>
+							<a href="/callie/index.php" class="logo"><img src="/callie/img/logo-alt.png" alt=""></a>
 						</div>
 						<p>Nec feugiat nisl pretium fusce id velit ut tortor pretium. Nisl purus in mollis nunc sed. Nunc non blandit massa enim nec.</p>
 						<ul class="contact-social">
@@ -752,7 +749,7 @@ function createUrl($str, $id) {
 			<div class="footer-bottom row">
 				<div class="col-md-6 col-md-push-6">
 					<ul class="footer-nav">
-						<li><a href="/project_be1/callie/index.php">Home</a></li>
+						<li><a href="/callie/index.php">Home</a></li>
 						<li><a href="about.html">About Us</a></li>
 						<li><a href="contact.html">Contacts</a></li>
 						<li><a href="#">Advertise</a></li>
